@@ -1,0 +1,11 @@
+.classpath
+.project
+.settings/
+target/
+test-output/
+src/test/resources/secret.properties
+reports/
+cucumber-reports/
+.allure/
+allure-report/
+allure-results/
