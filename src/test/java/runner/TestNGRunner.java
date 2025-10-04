@@ -4,8 +4,8 @@ import io.cucumber.testng.AbstractTestNGCucumberTests;
 import io.cucumber.testng.CucumberOptions;
 
 @CucumberOptions(
-		          features = {"src/test/java/features/incident.feature"},
-		          glue = {"steps.base.som"},
+		          features = {"src/test/java/features/incident.feature:14"},
+		          glue = {"step_definitions"},
 		          dryRun = false,
 		          plugin = {
 		        		  "pretty",

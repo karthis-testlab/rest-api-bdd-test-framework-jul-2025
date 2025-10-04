@@ -1,5 +1,6 @@
 package step_definitions;
 
+import io.cucumber.datatable.DataTable;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -8,6 +9,9 @@ import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 
 import static io.restassured.RestAssured.*;
+
+import java.util.List;
+import java.util.Map;
 
 import org.hamcrest.Matchers;
 
@@ -58,13 +62,17 @@ public class Incident {
 	}
 
 	@Then("user should successfully created the new record and with the relevant status code and message")
-	public void user_should_successfully_created_the_new_record_and_with_the_relevant_status_code_and_message() {
-		response.then()
-		        .log().all()
-                .assertThat()
-                .statusCode(201)
-                .statusLine(Matchers.containsString("Created"))
-                .contentType(ContentType.JSON);
+	public void user_should_successfully_created_the_new_record_and_with_the_relevant_status_code_and_message(DataTable dataTable) {
+	    List<Map<String, String>> asMaps = dataTable.asMaps();
+	    for (Map<String, String> map : asMaps) {
+	    	response.then()
+	        .log().all()
+            .assertThat()
+            .statusCode(Integer.parseInt(map.get("statusCode")))
+            .statusLine(Matchers.containsString(map.get("statusLine")))
+            .contentType(map.get("contentType"))
+            .time(Matchers.lessThan(Long.parseLong(map.get("responseTime"))));
+		}
 	}
 	
 }
